@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#fdf8f3"/>
+  <circle cx="400" cy="215" r="90" fill="#e8ddd3"/>
+  <path d="M365 190h70l-12 100h-46z" fill="#c0392b"/>
+  <path d="M382 165c0-30 36-30 36 0" fill="none" stroke="#636e72" stroke-width="10"/>
+  <text x="400" y="360" text-anchor="middle" font-family="Arial" font-size="30" fill="#636e72">
+    Recipe Photo
+  </text>
+</svg>
