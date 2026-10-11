@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecipes } from "../context/RecipeContext.jsx";
+import {
+  choiceLabel,
+  fieldLabel,
+  field,
+  fieldset,
+  formBtn,
+  h2,
+  legend,
+  link,
+  section
+} from "../ui.js";
 
 export default function LoginPage() {
   const { showToast } = useRecipes();
@@ -15,44 +26,48 @@ export default function LoginPage() {
   }
 
   return (
-    <section id="login">
-      <h2>Login</h2>
+    <section id="login" className={`${section} print:hidden`}>
+      <h2 className={h2}>Login</h2>
 
       <form onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>Welcome back</legend>
+        <fieldset className={fieldset}>
+          <legend className={legend}>Welcome back</legend>
 
-          <label htmlFor="login-email">Email:</label>
+          <label htmlFor="login-email" className={fieldLabel}>Email:</label>
           <input
             type="email"
             id="login-email"
+            className={field}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             autoComplete="email"
             required
           />
 
-          <label htmlFor="login-password">Password:</label>
+          <label htmlFor="login-password" className={fieldLabel}>Password:</label>
           <input
             type="password"
             id="login-password"
+            className={field}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             autoComplete="current-password"
             required
           />
 
-          <label>
-            <input type="checkbox" />
+          <label className={choiceLabel}>
+            <input type="checkbox" className="accent-primary" />
             Remember me
           </label>
 
-          <button type="submit">Login</button>
+          <button type="submit" className={formBtn}>
+            Login
+          </button>
 
           <p>
-            <Link to="/faq">Forgot your password?</Link>
+            <Link to="/faq" className={link}>Forgot your password?</Link>
             {" · "}
-            <Link to="/signup">
+            <Link to="/signup" className={link}>
               Don't have an account? Sign up
             </Link>
           </p>

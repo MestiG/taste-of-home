@@ -1,4 +1,15 @@
 import { useRecipes } from "../context/RecipeContext.jsx";
+import {
+  blockLabel,
+  btn,
+  choiceLabel,
+  field,
+  fieldset,
+  formActions,
+  h2,
+  legend,
+  section
+} from "../ui.js";
 
 export default function SearchFilters() {
   const { filters, updateFilters, resetFilters } = useRecipes();
@@ -8,14 +19,19 @@ export default function SearchFilters() {
   }
 
   return (
-    <section id="search" aria-label="Recipe search">
-      <h2>Find a Recipe</h2>
+    <section
+      id="search"
+      aria-label="Recipe search"
+      className={`${section} print:hidden`}
+    >
+      <h2 className={h2}>Find a Recipe</h2>
 
       <form onSubmit={handleSubmit}>
-        <label htmlFor="search-input">Search:</label>
+        <label htmlFor="search-input" className={blockLabel}>Search:</label>
         <input
           type="search"
           id="search-input"
+          className={field}
           placeholder="Search recipes, ingredients..."
           value={filters.search}
           onChange={(event) =>
@@ -23,9 +39,10 @@ export default function SearchFilters() {
           }
         />
 
-        <label htmlFor="category">Category:</label>
+        <label htmlFor="category" className={blockLabel}>Category:</label>
         <select
           id="category"
+          className={field}
           value={filters.category}
           onChange={(event) =>
             updateFilters({ category: event.target.value })
@@ -39,9 +56,10 @@ export default function SearchFilters() {
           <option value="snacks">Snacks</option>
         </select>
 
-        <label htmlFor="sort">Sort by:</label>
+        <label htmlFor="sort" className={blockLabel}>Sort by:</label>
         <select
           id="sort"
+          className={field}
           value={filters.sort}
           onChange={(event) =>
             updateFilters({ sort: event.target.value })
@@ -53,10 +71,10 @@ export default function SearchFilters() {
           <option value="quickest">Quickest</option>
         </select>
 
-        <fieldset>
-          <legend>Max cook time</legend>
+        <fieldset className={fieldset}>
+          <legend className={legend}>Max cook time</legend>
 
-          <label>
+          <label className={choiceLabel}>
             <input
               type="radio"
               name="time"
@@ -66,7 +84,7 @@ export default function SearchFilters() {
             Under 15 min
           </label>
 
-          <label>
+          <label className={choiceLabel}>
             <input
               type="radio"
               name="time"
@@ -76,7 +94,7 @@ export default function SearchFilters() {
             Under 30 min
           </label>
 
-          <label>
+          <label className={choiceLabel}>
             <input
               type="radio"
               name="time"
@@ -86,7 +104,7 @@ export default function SearchFilters() {
             Under 1 hour
           </label>
 
-          <label>
+          <label className={choiceLabel}>
             <input
               type="radio"
               name="time"
@@ -97,9 +115,11 @@ export default function SearchFilters() {
           </label>
         </fieldset>
 
-        <div className="form-actions">
-          <button type="submit">Search</button>
-          <button type="button" onClick={resetFilters}>
+        <div className={formActions}>
+          <button type="submit" className={btn}>
+            Search
+          </button>
+          <button type="button" className={btn} onClick={resetFilters}>
             Clear
           </button>
         </div>

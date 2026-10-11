@@ -2,6 +2,24 @@ import { Fragment, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useRecipes } from "../context/RecipeContext.jsx";
 import { capitalize, formatTime, stars } from "../utils/format.js";
+import {
+  btn,
+  btnBase,
+  btnLink,
+  emptyState,
+  field,
+  fieldLabel,
+  fieldset,
+  formActions,
+  h2,
+  h3,
+  legend,
+  link,
+  section
+} from "../ui.js";
+
+const th = "px-3 py-[0.55rem] border border-line text-left bg-page w-[40%]";
+const td = "px-3 py-[0.55rem] border border-line text-left";
 
 function createBaseReviews(recipe) {
   if (!recipe || recipe.reviews === 0) {
@@ -60,11 +78,11 @@ export default function RecipeDetailPage() {
 
   if (!recipe) {
     return (
-      <section>
-        <h2>Recipe not found</h2>
+      <section className={section}>
+        <h2 className={h2}>Recipe not found</h2>
         <p>The recipe you requested does not exist.</p>
 
-        <Link to="/" className="button">
+        <Link to="/" className={btnLink}>
           Back to Recipes
         </Link>
       </section>
@@ -117,20 +135,20 @@ export default function RecipeDetailPage() {
   }
 
   return (
-    <section id="recipe-detail">
+    <section id="recipe-detail" className={section}>
       <Fragment key={recipe.id}>
-        <nav aria-label="Breadcrumb">
-          <ol>
+        <nav aria-label="Breadcrumb" className="print:hidden">
+          <ol className="list-none p-0 flex flex-wrap gap-[0.4rem] text-[0.88rem] text-muted mb-3 [&>li+li]:before:content-['/'] [&>li+li]:before:mr-[0.4rem] [&>li+li]:before:text-line">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" className={link}>Home</Link>
             </li>
 
             <li>
-              <Link to="/#categories">Categories</Link>
+              <Link to="/#categories" className={link}>Categories</Link>
             </li>
 
             <li>
-              <Link to={`/?category=${recipe.category}#recipes`}>
+              <Link to={`/?category=${recipe.category}#recipes`} className={link}>
                 {capitalize(recipe.category)}
               </Link>
             </li>
@@ -139,9 +157,9 @@ export default function RecipeDetailPage() {
           </ol>
         </nav>
 
-        <h2>{recipe.title}</h2>
+        <h2 className={h2}>{recipe.title}</h2>
 
-        <figure className="detail-image">
+        <figure className="max-w-[720px]">
           <img
             src={recipe.img}
             alt={recipe.alt || recipe.title}
@@ -149,47 +167,49 @@ export default function RecipeDetailPage() {
           <figcaption>{recipe.desc}</figcaption>
         </figure>
 
-        <table>
-          <caption>Recipe Information</caption>
+        <table className="w-full border-collapse my-4 text-[0.95rem]">
+          <caption className="text-left font-bold mb-[0.4rem]">
+            Recipe Information
+          </caption>
 
           <tbody>
-            <tr>
-              <th scope="row">Prep Time</th>
-              <td>
+            <tr className="even:bg-zebra">
+              <th scope="row" className={th}>Prep Time</th>
+              <td className={td}>
                 {formatTime(Math.round(recipe.time * 0.2))}
               </td>
             </tr>
 
-            <tr>
-              <th scope="row">Cook Time</th>
-              <td>
+            <tr className="even:bg-zebra">
+              <th scope="row" className={th}>Cook Time</th>
+              <td className={td}>
                 {formatTime(Math.round(recipe.time * 0.8))}
               </td>
             </tr>
 
-            <tr>
-              <th scope="row">Total Time</th>
-              <td>{formatTime(recipe.time)}</td>
+            <tr className="even:bg-zebra">
+              <th scope="row" className={th}>Total Time</th>
+              <td className={td}>{formatTime(recipe.time)}</td>
             </tr>
 
-            <tr>
-              <th scope="row">Servings</th>
-              <td>{recipe.servings || "—"}</td>
+            <tr className="even:bg-zebra">
+              <th scope="row" className={th}>Servings</th>
+              <td className={td}>{recipe.servings || "—"}</td>
             </tr>
 
-            <tr>
-              <th scope="row">Difficulty</th>
-              <td>{recipe.difficulty || "—"}</td>
+            <tr className="even:bg-zebra">
+              <th scope="row" className={th}>Difficulty</th>
+              <td className={td}>{recipe.difficulty || "—"}</td>
             </tr>
 
-            <tr>
-              <th scope="row">Cuisine</th>
-              <td>{recipe.cuisine || "—"}</td>
+            <tr className="even:bg-zebra">
+              <th scope="row" className={th}>Cuisine</th>
+              <td className={td}>{recipe.cuisine || "—"}</td>
             </tr>
 
-            <tr>
-              <th scope="row">Reviews</th>
-              <td>{recipe.reviews + submittedReviews.length}</td>
+            <tr className="even:bg-zebra">
+              <th scope="row" className={th}>Reviews</th>
+              <td className={td}>{recipe.reviews + submittedReviews.length}</td>
             </tr>
           </tbody>
         </table>
@@ -198,6 +218,7 @@ export default function RecipeDetailPage() {
           Rating:
           {" "}
           <meter
+            className="accent-gold"
             value={recipe.rating}
             min="0"
             max="5"
@@ -208,12 +229,15 @@ export default function RecipeDetailPage() {
           {stars(recipe.rating)}
         </p>
 
-        <div className="action-row">
-          <a href="#reviews">Read reviews</a>
+        <div className="flex flex-wrap items-center gap-2 my-3 print:hidden">
+          <a href="#reviews" className={link}>
+            Read reviews
+          </a>
           <span>·</span>
 
           <button
             type="button"
+            className={btn}
             onClick={() => window.print()}
           >
             🖨 Print Recipe
@@ -222,20 +246,23 @@ export default function RecipeDetailPage() {
           <button
             type="button"
             onClick={handleFavorite}
-            className={saved ? "saved" : ""}
+            className={`${btnBase} ${
+              saved ? "bg-success" : "bg-primary hover:bg-primary-dark"
+            }`}
           >
             {saved ? "♥ Saved" : "✎ Save"}
           </button>
         </div>
 
-        <h3>Ingredients</h3>
+        <h3 className={h3}>Ingredients</h3>
         <p>Check off what you have:</p>
 
-        <ul className="ingredients">
+        <ul className="list-none p-0 lg:columns-2 lg:gap-x-8">
           {recipe.ingredients.map((ingredient, index) => (
-            <li key={`${recipe.id}-ingredient-${index}`}>
-              <label>
+            <li key={`${recipe.id}-ingredient-${index}`} className="py-[0.15rem]">
+              <label className="cursor-pointer has-[input:checked]:text-muted has-[input:checked]:line-through">
                 <input
+                  className="size-[1.05rem] accent-success"
                   type="checkbox"
                   name={`ingredient-${index}`}
                 />
@@ -245,37 +272,39 @@ export default function RecipeDetailPage() {
           ))}
         </ul>
 
-        <h3>Instructions</h3>
+        <h3 className={h3}>Instructions</h3>
 
-        <ol>
+        <ol className="list-decimal pl-5">
           {recipe.steps.map((step, index) => (
-            <li key={`${recipe.id}-step-${index}`}>
+            <li key={`${recipe.id}-step-${index}`} className="py-[0.15rem]">
               {step}
             </li>
           ))}
         </ol>
 
-        <h3>Tips &amp; Tricks</h3>
+        <h3 className={h3}>Tips &amp; Tricks</h3>
 
-        <aside>
+        <aside className="bg-tip border-l-4 border-accent rounded-lg px-4 py-[0.9rem] my-4">
           <p>
             💡 Taste and adjust the seasoning before serving.
           </p>
         </aside>
 
-        <h3 id="reviews">Ratings &amp; Reviews</h3>
+        <h3 id="reviews" className={h3}>Ratings &amp; Reviews</h3>
 
         {reviews.length > 0 ? (
           reviews.map((review) => (
             <article
-              className="review"
+              className="border border-line rounded-lg px-4 py-[0.9rem] my-3 bg-review"
               key={review.id}
             >
               <p>
                 <strong>{review.name}:</strong>
                 {" "}
                 {review.text}
-                <time>{review.date}</time>
+                <time className="text-muted text-[0.85rem] ml-2">
+                  {review.date}
+                </time>
               </p>
 
               <p>
@@ -284,27 +313,29 @@ export default function RecipeDetailPage() {
             </article>
           ))
         ) : (
-          <p className="empty-state">
+          <p className={emptyState}>
             Be the first to review this recipe!
           </p>
         )}
 
-        <form onSubmit={handleReviewSubmit}>
-          <fieldset>
-            <legend>Write a Review</legend>
+        <form onSubmit={handleReviewSubmit} className="print:hidden">
+          <fieldset className={fieldset}>
+            <legend className={legend}>Write a Review</legend>
 
-            <label htmlFor="review-name">Name:</label>
+            <label htmlFor="review-name" className={fieldLabel}>Name:</label>
             <input
               type="text"
               id="review-name"
+              className={field}
               name="name"
               autoComplete="name"
               required
             />
 
-            <label htmlFor="review-rating">Rating:</label>
+            <label htmlFor="review-rating" className={fieldLabel}>Rating:</label>
             <select
               id="review-rating"
+              className={field}
               name="rating"
               required
             >
@@ -316,16 +347,19 @@ export default function RecipeDetailPage() {
               <option value="1">★☆☆☆☆</option>
             </select>
 
-            <label htmlFor="comment">Comment:</label>
+            <label htmlFor="comment" className={fieldLabel}>Comment:</label>
             <textarea
               id="comment"
+              className={field}
               name="comment"
               rows="4"
               required
             />
 
-            <div className="form-actions">
-              <button type="submit">Submit Review</button>
+            <div className={formActions}>
+              <button type="submit" className={btn}>
+                Submit Review
+              </button>
             </div>
           </fieldset>
         </form>

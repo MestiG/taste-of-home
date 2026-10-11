@@ -2,6 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecipes } from "../context/RecipeContext.jsx";
 import { fileToDataUrl } from "../utils/format.js";
+import {
+  btn,
+  choiceLabel,
+  errorText,
+  field,
+  fieldLabel,
+  fieldset,
+  formActions,
+  h2,
+  legend,
+  section
+} from "../ui.js";
 
 const initialForm = {
   title: "",
@@ -84,15 +96,16 @@ export default function AddRecipePage() {
   }
 
   return (
-    <section id="add-recipe">
-      <h2>Add a New Recipe</h2>
+    <section id="add-recipe" className={`${section} print:hidden`}>
+      <h2 className={h2}>Add a New Recipe</h2>
 
       <form onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>Basic Info</legend>
+        <fieldset className={fieldset}>
+          <legend className={legend}>Basic Info</legend>
 
-          <label htmlFor="title">Recipe Title:</label>
+          <label htmlFor="title" className={fieldLabel}>Recipe Title:</label>
           <input
+            className={field}
             id="title"
             name="title"
             value={form.title}
@@ -100,8 +113,9 @@ export default function AddRecipePage() {
             required
           />
 
-          <label htmlFor="description">Short Description:</label>
+          <label htmlFor="description" className={fieldLabel}>Short Description:</label>
           <textarea
+            className={field}
             id="description"
             name="description"
             rows="2"
@@ -111,8 +125,9 @@ export default function AddRecipePage() {
             required
           />
 
-          <label htmlFor="category">Category:</label>
+          <label htmlFor="category" className={fieldLabel}>Category:</label>
           <select
+            className={field}
             id="category"
             name="category"
             value={form.category}
@@ -127,8 +142,9 @@ export default function AddRecipePage() {
             <option value="snacks">Snacks</option>
           </select>
 
-          <label htmlFor="cuisine">Cuisine:</label>
+          <label htmlFor="cuisine" className={fieldLabel}>Cuisine:</label>
           <input
+            className={field}
             id="cuisine"
             name="cuisine"
             placeholder="e.g. Ethiopian"
@@ -136,8 +152,9 @@ export default function AddRecipePage() {
             onChange={handleChange}
           />
 
-          <label htmlFor="tags">Tags:</label>
+          <label htmlFor="tags" className={fieldLabel}>Tags:</label>
           <input
+            className={field}
             id="tags"
             name="tags"
             placeholder="spicy, quick, vegan"
@@ -146,11 +163,12 @@ export default function AddRecipePage() {
           />
         </fieldset>
 
-        <fieldset>
-          <legend>Timing &amp; Servings</legend>
+        <fieldset className={fieldset}>
+          <legend className={legend}>Timing &amp; Servings</legend>
 
-          <label htmlFor="prepTime">Prep Time (minutes):</label>
+          <label htmlFor="prepTime" className={fieldLabel}>Prep Time (minutes):</label>
           <input
+            className={field}
             type="number"
             id="prepTime"
             name="prepTime"
@@ -160,8 +178,9 @@ export default function AddRecipePage() {
             required
           />
 
-          <label htmlFor="cookTime">Cook Time (minutes):</label>
+          <label htmlFor="cookTime" className={fieldLabel}>Cook Time (minutes):</label>
           <input
+            className={field}
             type="number"
             id="cookTime"
             name="cookTime"
@@ -171,8 +190,9 @@ export default function AddRecipePage() {
             required
           />
 
-          <label htmlFor="servings">Servings:</label>
+          <label htmlFor="servings" className={fieldLabel}>Servings:</label>
           <input
+            className={field}
             type="number"
             id="servings"
             name="servings"
@@ -183,11 +203,12 @@ export default function AddRecipePage() {
             required
           />
 
-          <fieldset>
-            <legend>Difficulty</legend>
+          <fieldset className={fieldset}>
+            <legend className={legend}>Difficulty</legend>
 
-            <label>
+            <label className={choiceLabel}>
               <input
+                className="accent-primary"
                 type="radio"
                 name="difficulty"
                 value="easy"
@@ -197,8 +218,9 @@ export default function AddRecipePage() {
               Easy
             </label>
 
-            <label>
+            <label className={choiceLabel}>
               <input
+                className="accent-primary"
                 type="radio"
                 name="difficulty"
                 value="medium"
@@ -208,8 +230,9 @@ export default function AddRecipePage() {
               Medium
             </label>
 
-            <label>
+            <label className={choiceLabel}>
               <input
+                className="accent-primary"
                 type="radio"
                 name="difficulty"
                 value="hard"
@@ -221,13 +244,14 @@ export default function AddRecipePage() {
           </fieldset>
         </fieldset>
 
-        <fieldset>
-          <legend>Content</legend>
+        <fieldset className={fieldset}>
+          <legend className={legend}>Content</legend>
 
-          <label htmlFor="ingredients">
+          <label htmlFor="ingredients" className={fieldLabel}>
             Ingredients, one per line:
           </label>
           <textarea
+            className={field}
             id="ingredients"
             name="ingredients"
             rows="6"
@@ -236,10 +260,11 @@ export default function AddRecipePage() {
             required
           />
 
-          <label htmlFor="instructions">
+          <label htmlFor="instructions" className={fieldLabel}>
             Instructions, one step per line:
           </label>
           <textarea
+            className={field}
             id="instructions"
             name="instructions"
             rows="8"
@@ -248,7 +273,7 @@ export default function AddRecipePage() {
             required
           />
 
-          <label htmlFor="photo">Photo:</label>
+          <label htmlFor="photo" className={fieldLabel}>Photo:</label>
           <input
             type="file"
             id="photo"
@@ -257,12 +282,15 @@ export default function AddRecipePage() {
           />
         </fieldset>
 
-        {error && <p className="error-text">{error}</p>}
+        {error && <p className={errorText}>{error}</p>}
 
-        <div className="form-actions">
-          <button type="submit">Submit Recipe</button>
+        <div className={formActions}>
+          <button type="submit" className={btn}>
+            Submit Recipe
+          </button>
           <button
             type="button"
+            className={btn}
             onClick={() => setForm(initialForm)}
           >
             Clear Form

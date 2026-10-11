@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecipes } from "../context/RecipeContext.jsx";
+import {
+  choiceLabel,
+  errorText,
+  fieldLabel,
+  field,
+  fieldset,
+  formBtn,
+  h2,
+  legend,
+  link,
+  section
+} from "../ui.js";
 
 export default function SignupPage() {
   const { showToast } = useRecipes();
@@ -36,16 +48,17 @@ export default function SignupPage() {
   }
 
   return (
-    <section id="signup">
-      <h2>Sign Up</h2>
+    <section id="signup" className={`${section} print:hidden`}>
+      <h2 className={h2}>Sign Up</h2>
 
       <form onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>Create your account</legend>
+        <fieldset className={fieldset}>
+          <legend className={legend}>Create your account</legend>
 
-          <label htmlFor="signup-name">Name:</label>
+          <label htmlFor="signup-name" className={fieldLabel}>Name:</label>
           <input
             id="signup-name"
+            className={field}
             name="name"
             value={form.name}
             onChange={handleChange}
@@ -53,10 +66,11 @@ export default function SignupPage() {
             required
           />
 
-          <label htmlFor="signup-email">Email:</label>
+          <label htmlFor="signup-email" className={fieldLabel}>Email:</label>
           <input
             type="email"
             id="signup-email"
+            className={field}
             name="email"
             value={form.email}
             onChange={handleChange}
@@ -64,12 +78,13 @@ export default function SignupPage() {
             required
           />
 
-          <label htmlFor="signup-password">
+          <label htmlFor="signup-password" className={fieldLabel}>
             Password, minimum 8 characters:
           </label>
           <input
             type="password"
             id="signup-password"
+            className={field}
             name="password"
             minLength="8"
             value={form.password}
@@ -78,12 +93,13 @@ export default function SignupPage() {
             required
           />
 
-          <label htmlFor="signup-password-confirm">
+          <label htmlFor="signup-password-confirm" className={fieldLabel}>
             Confirm Password:
           </label>
           <input
             type="password"
             id="signup-password-confirm"
+            className={field}
             name="confirmPassword"
             minLength="8"
             value={form.confirmPassword}
@@ -92,16 +108,18 @@ export default function SignupPage() {
             required
           />
 
-          {error && <p className="error-text">{error}</p>}
+          {error && <p className={errorText}>{error}</p>}
 
-          <label>
-            <input type="checkbox" required />
+          <label className={choiceLabel}>
+            <input type="checkbox" required className="accent-primary" />
             I agree to the
             {" "}
-            <Link to="/faq">Terms of Service</Link>
+            <Link to="/faq" className={link}>Terms of Service</Link>
           </label>
 
-          <button type="submit">Create Account</button>
+          <button type="submit" className={formBtn}>
+            Create Account
+          </button>
         </fieldset>
       </form>
     </section>

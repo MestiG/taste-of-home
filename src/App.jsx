@@ -21,7 +21,7 @@ export default function App() {
 
       <Header />
 
-      <main id="main-content">
+      <main id="main-content" className="w-full max-w-[1200px] mx-auto px-4">
         <ScrollToTop />
 
         <Routes>
